@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>res/trisquel/logo.png</file>
+        <file>res/apricity/logo.png</file>
+        <file>res/arch/logo.png</file>
+        <file>res/archbang/logo.png</file>
+        <file>res/centos/logo.png</file>
+        <file>res/fedora/logo.png</file>
+        <file>res/freebsd/logo.png</file>
+        <file>res/gentoo/logo.png</file>
+        <file>res/kali/logo.png</file>
+        <file>res/kubuntu/logo.png</file>
+        <file>res/manjaro/logo.png</file>
+        <file>res/mint/logo.png</file>
+        <file>res/netbsd/logo.png</file>
+        <file>res/nixos/logo.png</file>
+        <file>res/openbsd/logo.png</file>
+        <file>res/opensuse/logo.png</file>
+        <file>res/pclinuxos/logo.png</file>
+        <file>res/puppy/logo.png</file>
+        <file>res/rebeccablackos/logo.png</file>
+        <file>res/redhat/logo.png</file>
+        <file>res/slackware/logo.png</file>
+        <file>res/tails/logo.png</file>
+        <file>res/ubuntu/logo.png</file>
+        <file>main.cpp</file>
+    </qresource>
+</RCC>
