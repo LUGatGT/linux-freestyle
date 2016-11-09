@@ -37,21 +37,11 @@ ApplicationWindow {
         ListElement{ name: "ubuntu" }
     }
 
-
-    GridView {
-        width: parent.width
-        height: parent.height
-        id: pathView1
-        model: distrosModel
-        delegate: distroDelegate
-        cellWidth: 200
-        cellHeight: 200
-    }
-
-
     Component {
         id: distroDelegate
+
         ColumnLayout {
+
             MouseArea {
                 width: 100
                 height: 100
@@ -62,6 +52,79 @@ ApplicationWindow {
                     source: "/res/" + name + "/logo.png"
                 }
             }
+        }
+    }
+
+    ListModel {
+        id: categories
+        ListElement {
+            label: "By Flavor"
+            tag: "flavor"
+        }
+        ListElement {
+            label: "By Name"
+            tag: "all"
+        }
+        ListElement {
+            label: "By Desktop"
+            tag: "desktop"
+        }
+        ListElement {
+            label: "By Specialty"
+            tag: "special"
+        }
+        ListElement {
+            label: "Esoteric"
+            tag: "esoteric"
+        }
+    }
+    
+    ColumnLayout {
+        x: 0
+        y: 0
+        width: parent.width
+        height: parent.height
+        
+        RowLayout {
+            id: top_menu_bar
+            width: parent.width
+            Layout.fillWidth: true
+            anchors.top: parent.top
+
+            TopMenuButton {
+                id: top_back_btn
+                text: "Go Back"
+            }
+            
+            // top menu
+            ListView {
+                id: top_menu_btns
+                Layout.fillWidth: true
+                orientation: ListView.Horizontal
+                model: categories
+                anchors.left: up_level_btn.right
+                anchors.right: parent.right
+                anchors.top: parent.top
+
+                delegate: TopMenuButton {
+                    text: label
+                }
+            }
+        }
+        
+        // main selection circles
+        GridView {
+            id: main_selection_menu
+            z: -1
+            Layout.fillWidth: true
+            anchors.top: top_menu_bar.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            cellWidth: 150
+            cellHeight: 150
+            model: distrosModel
+            delegate: distroDelegate
         }
     }
 }
