@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Must use bash 4.0
+
+# http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+TMP_DIR="/tmp"
+
+DD="dd"
+
+
+main() {
+	# Check to see if we have a suitable version of bash (for maps)
+	if [ "$(echo "$BASH_VERSION" | awk -F. '{ print $1 }')" -lt 4 ]; then
+		echo "ddd requires bash > 4.0. Exiting." >&2
+		exit
+	fi
+}
+
+
+main
