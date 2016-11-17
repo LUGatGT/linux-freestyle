@@ -102,6 +102,8 @@ charging lol).
 
 Who wants to take what? Please add your handles here:
 
+| Feature| Lead|
+|---|---|
 | `dd` | @jgkamat |
 | `ui` | @lotusronin |
 | `torrenting` | @miningmarsh |
