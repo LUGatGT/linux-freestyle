@@ -103,3 +103,9 @@ charging lol).
 Who wants to take what? Please add your handles here:
 
 | `dd` | @jgkamat |
+| `ui` | @lotusronin |
+| `torrenting` | @miningmarsh |
+| `metadata` | @limvot |
+| `udev` | @illegalprime |
+| `provisioning` | @miningmarsh |
+
