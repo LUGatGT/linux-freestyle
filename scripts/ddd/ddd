@@ -10,16 +10,18 @@ set -euo pipefail
 IFS=$'\n\t'
 
 
-
 TMP_ROOT="/tmp/"
 DDD_SUBDIR="ddd_data"
 
 TMP_DIR=${TMP_ROOT}/${DDD_SUBDIR}
 DDD_MAP="${TMP_DIR}/mappings"
 
-DD="dd"
+DEFAULT_LOCK="${TMP_DIR}/ddd_lock"
 
-ACTION='invalid'
+DD_ARGS="status=none"
+
+SLP_TIME=0.5
+export ACTION='invalid'
 
 # Map to hold usb -> pid mappings
 declare -A USB_MAP
@@ -38,6 +40,24 @@ inFile and outFile are only needed if you specify start
 EOF
 }
 
+# Aquires a lock. Give it a path to a lock file (that dosen't exist yet)
+# mkdir(1) should be atomic. On most computers at least.
+aquire() {
+	LK=${1:-$DEFAULT_LOCK}
+	# TODO redirect output of mkdir to prevent false output.
+	while ! mkdir ${LK}; do
+		sleep ${SLP_TIME}
+	done
+	# Lock was aquired, continue.
+}
+
+# Releases a lock file
+# Does not fail if lock was not aquired.
+release() {
+	LK=${1:-$DEFAULT_LOCK}
+	rm -rf ${LK}
+}
+
 parse_args() {
 	if [ "$#" -lt 1 ]; then
 		usage
@@ -50,20 +70,20 @@ parse_args() {
 				usage
 				exit 1
 			fi
-			INFILE="$2"
-			OUTFILE="$3"
-			ACTION='start'
+			export INFILE="$2"
+			export OUTFILE="$3"
+			export ACTION='start'
 			;;
 		status)
 			if [ "$#" -lt 2 ]; then
 				usage
 				exit 1
 			fi
-			OUTFILE="$2"
-			ACTION='status'
+			export OUTFILE="$2"
+			export ACTION='status'
 			;;
 		*)
-			usage
+			usage >&2
 			exit 1
 			;;
 	esac
@@ -95,20 +115,69 @@ check_bash_version() {
 	fi
 }
 
-status() {
+# Function to be forked off that manages running dd, and reporting failure status back to the hashmap
+# @param inFile
+# @param outFile
+run_dd() {
+	INFILE="${1:-$INFILE}"
+	OUTFILE="${2:-$OUTFILE}"
+
+	OUTPUT=$'\n'
+
+	set +e
+	# Report back to us once every 5 seconds with a 0->100 percentage
+	(stdbuf -oL pv -i 5 -p -n ${INFILE} | dd ${DD_ARGS:-} of=${OUTFILE}) 2>&1 | {
+		while IFS= read -r line; do
+			# Check if we have a naked number
+			if  echo "$line" | grep -Eqo '^[0-9]+$'; then
+				# Write results of dd run to map
+				aquire
+				restore_mapping
+
+				USB_MAP[$OUTFILE]="p$line"
+
+				save_mapping
+				release
+			else
+				# Log for storage later
+				OUTPUT="$OUTPUT"$'\n'"$line"
+			fi
+		done
+		RET="$?"
+		set -e
+
+		# Write results of dd run to map
+		aquire
+		restore_mapping
+
+		USB_MAP[$OUTFILE]="c${RET}$OUTPUT"
+
+		save_mapping
+		release
+	}
 }
 
+# status() {
+# }
+
 start() {
+	# Force start at 0 progress
+	aquire
+	restore_mapping
+	USB_MAP[$OUTFILE]="p0"
+	save_mapping
+	release
+
+	run_dd $INFILE $OUTFILE &
 }
 
 main() {
 	check_bash_version
 
-	restore_mapping
-
 	parse_args "$@"
 
-	save_mapping
+	# TODO remove, this is for testing
+	start
 }
 
 main "$@"
