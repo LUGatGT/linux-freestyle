@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 2.0
+import pizza.lug.classes 1.0
 
 Item {
     id: distroDetailPageItem
@@ -29,9 +30,12 @@ Item {
         x: 417
         y: 86
         text: qsTr("Install")
+        DDLauncher {
+            id: ddcaller
+        }
         onClicked: function() {
-            //TODO call DD
-            console.log("NOT IMPLEMENTED YET!!!")
+            //console.log("NOT IMPLEMENTED YET!!!")
+            ddcaller.writeISO(distroName)
         }
     }
 
