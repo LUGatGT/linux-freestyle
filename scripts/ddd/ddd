@@ -23,6 +23,11 @@ DD_ARGS="status=none"
 SLP_TIME=0.5
 export ACTION='invalid'
 
+EXIT_NOT_FOUND=100
+EXIT_FAILED_WRITE=101
+EXIT_ALREADY_RUNNING=200
+EXIT_INTERNAL_ERR=1
+
 # Map to hold usb -> pid mappings
 declare -A USB_MAP
 # Squelch not defined errors by adding a map.
@@ -45,7 +50,7 @@ EOF
 aquire() {
 	LK=${1:-$DEFAULT_LOCK}
 	# TODO redirect output of mkdir to prevent false output.
-	while ! mkdir ${LK}; do
+	while ! mkdir ${LK} >/dev/null 2>&1; do
 		sleep ${SLP_TIME}
 	done
 	# Lock was aquired, continue.
@@ -61,14 +66,14 @@ release() {
 parse_args() {
 	if [ "$#" -lt 1 ]; then
 		usage
-		exit 1
+		exit ${EXIT_INTERNAL_ERR}
 	fi
 
 	case $1 in
 		start)
 			if [ "$#" -lt 3 ]; then
 				usage
-				exit 1
+				exit ${EXIT_INTERNAL_ERR}
 			fi
 			export INFILE="$2"
 			export OUTFILE="$3"
@@ -77,14 +82,14 @@ parse_args() {
 		status)
 			if [ "$#" -lt 2 ]; then
 				usage
-				exit 1
+				exit ${EXIT_INTERNAL_ERR}
 			fi
 			export OUTFILE="$2"
 			export ACTION='status'
 			;;
 		*)
 			usage >&2
-			exit 1
+			exit ${EXIT_INTERNAL_ERR}
 			;;
 	esac
 }
@@ -95,11 +100,11 @@ restore_mapping() {
 
 	# If we have stored USB_MAP, reload it
 	if [ -f ${DDD_MAP} ]; then
-        source ${DDD_MAP}
-        for key in "${!USB_MAP_TMP[@]}"
-        do
-            USB_MAP["$key"]="${USB_MAP_TMP["$key"]}"
-        done
+		source ${DDD_MAP}
+		for key in "${!USB_MAP_TMP[@]}"
+		do
+			USB_MAP["$key"]="${USB_MAP_TMP["$key"]}"
+		done
 	fi
 }
 
@@ -115,7 +120,7 @@ check_bash_version() {
 	# Check to see if we have a suitable version of bash (for maps)
 	if [ "$(echo "$BASH_VERSION" | awk -F. '{ print $1 }')" -lt 4 ]; then
 		echo "ddd requires bash > 4.0. Exiting." >&2
-		exit 1
+		exit ${EXIT_INTERNAL_ERR}
 	fi
 }
 
@@ -126,52 +131,89 @@ run_dd() {
 	INFILE="${1:-$INFILE}"
 	OUTFILE="${2:-$OUTFILE}"
 
-	OUTPUT=$'\n'
+	OUTPUT=""
 
 	set +e
 	# Report back to us once every 5 seconds with a 0->100 percentage
-	(stdbuf -oL pv -i 5 -p -n ${INFILE} | dd ${DD_ARGS:-} of=${OUTFILE}) 2>&1 | {
-		while IFS= read -r line; do
-			# Check if we have a naked number
-			if  echo "$line" | grep -Eqo '^[0-9]+$'; then
-				# Write results of dd run to map
-				aquire
-				restore_mapping
+	# This weirdness let's us read the OUTPUT variable in the braces, as well as the return code of dd, and process dd output line by line
+	# http://unix.stackexchange.com/questions/117501/in-bash-script-how-to-capture-stdout-line-by-line
+	# This runs in a subshell so we need to do this to extract all the data we need.
+	OUTPUT=$((stdbuf -oL pv -i 5 -p -n ${INFILE} | dd ${DD_ARGS:-} of=${OUTFILE}) 2>&1 | {
+				 while IFS= read -r line; do
+					 # Check if we have a naked number
+					 if  echo "$line" | grep -Eqo '^[0-9]+$'; then
+						 # Write results of dd run to map
+						 aquire
+						 restore_mapping
 
-				USB_MAP[$OUTFILE]="p$line"
+						 USB_MAP[$OUTFILE]="p$line"
 
-				save_mapping
-				release
-			else
-				# Log for storage later
-				OUTPUT="$OUTPUT"$'\n'"$line"
-			fi
-		done
-		RET="$?"
-		set -e
+						 save_mapping
+						 release
+					 else
+						 # Log for storage later
+						 export OUTPUT="$OUTPUT"$'\n'"$line"
+					 fi
+				 done
+				 echo "$OUTPUT"
+			 })
+	RET="$?"
+	set -e
 
-		# Write results of dd run to map
-		aquire
-		restore_mapping
+	# Write results of dd run to map
+	aquire
+	restore_mapping
 
-		USB_MAP[$OUTFILE]="c${RET}$OUTPUT"
+	USB_MAP[$OUTFILE]="c${RET}$OUTPUT"
 
-		save_mapping
-		release
-	}
+	save_mapping
+	release
+
+	# echo "$?"
 }
 
 status() {
 	aquire
 	restore_mapping
 	release
-    echo "file at ${USB_MAP[$OUTFILE]}"
+
+	STATUS="${USB_MAP[$OUTFILE]:-}"
+	if [ -z "$STATUS" ]; then
+		echo "no job found" >&2
+		exit $EXIT_NOT_FOUND
+	fi
+
+	if echo "$STATUS" | grep -Eq '^p[0-9]+$'; then
+		# In progress
+		echo "$STATUS" | grep -Eo '[0-9]+'
+	elif echo "$STATUS" | grep -Eq '^c[0-9]+'; then
+		# Finished
+		if echo "$STATUS" | grep -Eqo '^c0'; then
+			# Success
+			echo "completed"
+		else
+			echo "failed"
+			# Status code
+			echo "$STATUS" | head -n 1 | grep -Eo '[0-9]+'
+			# Error logs
+			echo "$STATUS" | tail -n +2
+			exit $EXIT_FAILED_WRITE
+		fi
+	fi
 }
 
 start() {
 	# Force start at 0 progress
 	aquire
 	restore_mapping
+
+	if echo "${USB_MAP[$OUTFILE]:-}" | grep -q '^p'; then
+		# Something's already running
+		release
+		echo "job already running" >&2
+		exit $EXIT_ALREADY_RUNNING
+	fi
+
 	USB_MAP[$OUTFILE]="p0"
 	save_mapping
 	release
@@ -179,12 +221,20 @@ start() {
 	run_dd $INFILE $OUTFILE &
 }
 
+invalid() {
+	echo >&2 "An Internal Error Occured!"
+	exit ${EXIT_INTERNAL_ERR}
+}
+
 main() {
+	# Create our tmp dir
+	mkdir -p ${TMP_DIR}
+
 	check_bash_version
 
 	parse_args "$@"
 
-    $ACTION
+	$ACTION
 }
 
 main "$@"
