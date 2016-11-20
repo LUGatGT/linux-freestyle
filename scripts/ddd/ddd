@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Must use bash 4.0+
 
@@ -95,7 +95,11 @@ restore_mapping() {
 
 	# If we have stored USB_MAP, reload it
 	if [ -f ${DDD_MAP} ]; then
-		source ${DDD_MAP}
+        source ${DDD_MAP}
+        for key in "${!USB_MAP_TMP[@]}"
+        do
+            USB_MAP["$key"]="${USB_MAP_TMP["$key"]}"
+        done
 	fi
 }
 
@@ -104,7 +108,7 @@ save_mapping() {
 	mkdir -p ${TMP_DIR}
 
 	# Write USB_MAP to tmp file
-	declare -p USB_MAP > ${DDD_MAP}
+	declare -p USB_MAP | sed "s/USB_MAP/USB_MAP_TMP/g" > ${DDD_MAP}
 }
 
 check_bash_version() {
@@ -157,8 +161,12 @@ run_dd() {
 	}
 }
 
-# status() {
-# }
+status() {
+	aquire
+	restore_mapping
+	release
+    echo "file at ${USB_MAP[$OUTFILE]}"
+}
 
 start() {
 	# Force start at 0 progress
@@ -176,8 +184,7 @@ main() {
 
 	parse_args "$@"
 
-	# TODO remove, this is for testing
-	start
+    $ACTION
 }
 
 main "$@"
