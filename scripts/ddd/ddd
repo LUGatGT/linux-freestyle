@@ -4,7 +4,6 @@
 
 # ddd - The Dynamic Disk Destroyer
 
-
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
 set -euo pipefail
 IFS=$'\n\t'
@@ -86,6 +85,9 @@ parse_args() {
 			fi
 			export OUTFILE="$2"
 			export ACTION='status'
+			;;
+		clean)
+			export ACTION='clean'
 			;;
 		*)
 			usage >&2
@@ -224,6 +226,10 @@ start() {
 invalid() {
 	echo >&2 "An Internal Error Occured!"
 	exit ${EXIT_INTERNAL_ERR}
+}
+
+clean() {
+	release
 }
 
 main() {
