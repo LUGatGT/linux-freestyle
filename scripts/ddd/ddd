@@ -48,7 +48,6 @@ EOF
 # mkdir(1) should be atomic. On most computers at least.
 aquire() {
 	LK=${1:-$DEFAULT_LOCK}
-	# TODO redirect output of mkdir to prevent false output.
 	while ! mkdir ${LK} >/dev/null 2>&1; do
 		sleep ${SLP_TIME}
 	done
