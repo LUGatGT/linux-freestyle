@@ -57,19 +57,36 @@ ApplicationWindow {
         }
     }
 
+    Loader {
+        id: pageLoader
+    }
+    Connections {
+        ignoreUnknownSignals: true
+        target: pageLoader.item
+        onPageExit : {
+            pageLoader.source = "" //unload page
+            pathView1.visible = true
+        }
+    }
 
     Component {
         id: distroDelegate
         ColumnLayout {
+            MouseArea {
+                onClicked: function() {
+                    console.log(name)
+                    //pageLoader.
+                    pageLoader.setSource("detailPage.qml",{"distroName":name})
+                    pathView1.visible = false
+                }
+                width: 100
+                height: 100
                 Image {
                     width: 100
                     height: 100
                     source: "res/" + name + "/logo.png"
-                    MouseArea {
-                        preventStealing: true
-                        onPressed: { console.log(name)}
-                    }
                 }
+            }
         }
     }
 

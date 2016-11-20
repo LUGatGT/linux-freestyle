@@ -25,5 +25,6 @@
         <file>res/tails/logo.png</file>
         <file>res/ubuntu/logo.png</file>
         <file>main.cpp</file>
+        <file>detailPage.qml</file>
     </qresource>
 </RCC>
