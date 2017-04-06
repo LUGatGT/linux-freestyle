@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+group = 'org.lugatgt'
+version = '1.0'
+
+mainClassName = "Main"
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
