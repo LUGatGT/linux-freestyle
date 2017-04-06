@@ -13,10 +13,7 @@ netbsd
 nixos
 openbsd
 opensuse
-pclinuxos
 puppy
-rebeccablackos
-redhat
 slackware
 tails
 trisquel
