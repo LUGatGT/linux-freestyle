@@ -8,10 +8,10 @@ repositories {
 	mavenCentral()
 }
 
-group = 'org.lugatgt'
+group = 'freestyle'
 version = '1.0'
 
-mainClassName = "Main"
+mainClassName = "freestyle.Main"
 
 jar {
     manifest {
