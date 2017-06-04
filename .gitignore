@@ -2,3 +2,4 @@ build-linux-freestyle-Desktop-Debug/
 build/
 *.user
 .gradle
+/.nb-gradle/
