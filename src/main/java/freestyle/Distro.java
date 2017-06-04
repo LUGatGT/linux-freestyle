@@ -1,3 +1,5 @@
+package freestyle;
+
 public class Distro {
     public String name;
     public String version;
