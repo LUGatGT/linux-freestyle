@@ -8,6 +8,11 @@ repositories {
 	mavenCentral()
 }
 
+dependencies {
+    compile 'com.google.code.gson:gson:2.8.0'
+    testCompile 'junit:junit:4.12'
+}
+
 group = 'freestyle'
 version = '1.0'
 
