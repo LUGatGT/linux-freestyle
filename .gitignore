@@ -3,3 +3,4 @@ build/
 *.user
 .gradle
 /.nb-gradle/
+private/cache/retriever/catalog.xml
