@@ -10,30 +10,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.reflect.Type;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+
+import java.io.IOException;
+
 public class TestJson {
 
     @Test
-    public void isValidJson() {
-        String distroFile = getClass().getResource("/distros.json").
-            toExternalForm();
+    public void isValidJson() throws IOException {
+        InputStream distroFileStream = getClass().getResourceAsStream("/distros.json");
+        BufferedReader br = new BufferedReader(new InputStreamReader(distroFileStream));
 
         Type typeOfT = new TypeToken<Map<String,Distro>>(){}.getType();
         Gson gson = new Gson();
 
-        Map<String,Distro> distros = gson.fromJson(distroFile, typeOfT);
-        System.out.println(distros);
+        Map<String,Distro> distros = gson.fromJson(br, typeOfT);
     }
 
-    @Test
-    public void createJson() {
-        Gson gson = new Gson();
-        Distro d = new Distro();
-        d.name = "Ubuntu";
-        d.version = "12.04";
-        d.iso = "http://google.com/index.iso";
-        d.logo_url = "http://google.com/index.iso";
-
-        String s = gson.toJson(d);
-        System.out.println(s);
-    }
 }
