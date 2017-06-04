@@ -1,170 +1,168 @@
 {
-    "distros": {
-        "apricity" : {
-            "name": "Apricity OS",
-            "version": "11.2016",
-            "iso": "https://static.apricityos.com/iso/apricity_os-11.2016-birch-gnome-x86_64.iso",
-            "iso_md5sum": "2c46a4b020fb552ae84f631e1835fa3a",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/apricity.png"
-        },
+    "apricity" : {
+        "name": "Apricity OS",
+        "version": "11.2016",
+        "iso": "https://static.apricityos.com/iso/apricity_os-11.2016-birch-gnome-x86_64.iso",
+        "iso_md5sum": "2c46a4b020fb552ae84f631e1835fa3a",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/apricity.png"
+    },
 
-        "arch" : {
-            "name": "Arch Linux",
-            "version": "2017.04.01",
-            "iso": "http://www.gtlib.gatech.edu/pub/archlinux/iso/2017.04.01/archlinux-2017.04.01-x86_64.iso",
-            "iso_md5sum": "aeed1a62fe2d812715a121ca93866995",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/arch.png"
-        },
+    "arch" : {
+        "name": "Arch Linux",
+        "version": "2017.04.01",
+        "iso": "http://www.gtlib.gatech.edu/pub/archlinux/iso/2017.04.01/archlinux-2017.04.01-x86_64.iso",
+        "iso_md5sum": "aeed1a62fe2d812715a121ca93866995",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/arch.png"
+    },
 
-        "archbang" : {
-            "name": "ArchBang",
-            "version": "0317",
-            "iso": "https://superb-sea2.dl.sourceforge.net/project/archbang/ArchBang-Spring/archbang-0317-x86_64.iso",
-            "iso_md5sum": "af0b97d27444c75c2b6fa5f39d37846a",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/archbang.png"
-        },
+    "archbang" : {
+        "name": "ArchBang",
+        "version": "0317",
+        "iso": "https://superb-sea2.dl.sourceforge.net/project/archbang/ArchBang-Spring/archbang-0317-x86_64.iso",
+        "iso_md5sum": "af0b97d27444c75c2b6fa5f39d37846a",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/archbang.png"
+    },
 
-        "centos" : {
-            "name": "Centos",
-            "version": "7",
-            "iso": "http://mirror.cs.pitt.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Everything-1611.iso",
-            "iso_sha256sum": "745a0a4a02147d8371b87dd09d402c7dc5fddc609caa7af44bc7b004de78c58a",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/centos.png"
-        },
+    "centos" : {
+        "name": "Centos",
+        "version": "7",
+        "iso": "http://mirror.cs.pitt.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Everything-1611.iso",
+        "iso_sha256sum": "745a0a4a02147d8371b87dd09d402c7dc5fddc609caa7af44bc7b004de78c58a",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/centos.png"
+    },
 
-        "fedora" : {
-            "name": "Fedora",
-            "version": "25",
-            "iso": "http://mirrors.rit.edu/fedora/fedora/linux/releases/25/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-25-1.3.iso",
-            "iso_sha256sum": "818017f42a2741cfaf20e94aecf6a63d1b995abfdaff5917df7218d0d89976a7",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/fedora.png"
-        },
+    "fedora" : {
+        "name": "Fedora",
+        "version": "25",
+        "iso": "http://mirrors.rit.edu/fedora/fedora/linux/releases/25/Workstation/x86_64/iso/Fedora-Workstation-Live-x86_64-25-1.3.iso",
+        "iso_sha256sum": "818017f42a2741cfaf20e94aecf6a63d1b995abfdaff5917df7218d0d89976a7",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/fedora.png"
+    },
 
-        "freebsd" : {
-            "name": "FreeBSD",
-            "version": "11",
-            "iso": "https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/11.0/FreeBSD-11.0-RELEASE-amd64-memstick.img",
-            "iso_sha256sum": "04cdc9575d674a821b4a099743545b35e5f57ce274872297c5f251d25322f299",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/freebsd.png"
-        },
+    "freebsd" : {
+        "name": "FreeBSD",
+        "version": "11",
+        "iso": "https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/11.0/FreeBSD-11.0-RELEASE-amd64-memstick.img",
+        "iso_sha256sum": "04cdc9575d674a821b4a099743545b35e5f57ce274872297c5f251d25322f299",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/freebsd.png"
+    },
 
-        "gentoo" : {
-            "name": "Gentoo",
-            "version": "2017-03-16",
-            "iso": "http://distfiles.gentoo.org/releases/amd64/autobuilds/20170316/install-amd64-minimal-20170316.iso",
-            "iso_sha512sum": "aa3c3198e00de19b4a139cbed55833a08b74ebc442c34213627c153fafce50d42e4ede725a9678e8aab4687811cff7eb7fe174e9f37275853ed7550c0a643301",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/gentoo.png"
-        },
+    "gentoo" : {
+        "name": "Gentoo",
+        "version": "2017-03-16",
+        "iso": "http://distfiles.gentoo.org/releases/amd64/autobuilds/20170316/install-amd64-minimal-20170316.iso",
+        "iso_sha512sum": "aa3c3198e00de19b4a139cbed55833a08b74ebc442c34213627c153fafce50d42e4ede725a9678e8aab4687811cff7eb7fe174e9f37275853ed7550c0a643301",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/gentoo.png"
+    },
 
-        "kali" : {
-            "name": "Kali Linux",
-            "version": "2016.2",
-            "iso": "http://cdimage.kali.org/kali-2016.2/kali-linux-2016.2-amd64.iso",
-            "iso_sha256sum": "1d90432e6d5c6f40dfe9589d9d0450a53b0add9a55f71371d601a5d454fa0431",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/kali.png"
-        },
+    "kali" : {
+        "name": "Kali Linux",
+        "version": "2016.2",
+        "iso": "http://cdimage.kali.org/kali-2016.2/kali-linux-2016.2-amd64.iso",
+        "iso_sha256sum": "1d90432e6d5c6f40dfe9589d9d0450a53b0add9a55f71371d601a5d454fa0431",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/kali.png"
+    },
 
-        "kubuntu" : {
-            "name": "Kubuntu",
-            "version": "16.04.2",
-            "iso": "http://cdimage.ubuntu.com/kubuntu/releases/16.04.2/release/kubuntu-16.04.2-desktop-amd64.iso",
-            "iso_sha256sum": "e0d31da3d433b06574d55e82976e189d459704f46c80fd8f8f84c6735560ebc9",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/kubuntu.png"
-        },
+    "kubuntu" : {
+        "name": "Kubuntu",
+        "version": "16.04.2",
+        "iso": "http://cdimage.ubuntu.com/kubuntu/releases/16.04.2/release/kubuntu-16.04.2-desktop-amd64.iso",
+        "iso_sha256sum": "e0d31da3d433b06574d55e82976e189d459704f46c80fd8f8f84c6735560ebc9",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/kubuntu.png"
+    },
 
-        "manjaro" : {
-            "name": "Manjaro",
-            "version": "XFCE 17.0.1",
-            "iso": "https://superb-sea2.dl.sourceforge.net/project/manjarolinux/release/17.0.1/xfce/manjaro-xfce-17.0.1-stable-x86_64.iso",
-            "iso_sha1sum": "5d093986fa0abd54af48ce7912a9a5edfd37dc45",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/manjaro.png"
-        },
+    "manjaro" : {
+        "name": "Manjaro",
+        "version": "XFCE 17.0.1",
+        "iso": "https://superb-sea2.dl.sourceforge.net/project/manjarolinux/release/17.0.1/xfce/manjaro-xfce-17.0.1-stable-x86_64.iso",
+        "iso_sha1sum": "5d093986fa0abd54af48ce7912a9a5edfd37dc45",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/manjaro.png"
+    },
 
-        "mint" : {
-            "name": "Linux Mint",
-            "version": "18.1",
-            "iso": "http://mirrors.advancedhosters.com/linuxmint/isos/stable/18.1/linuxmint-18.1-cinnamon-64bit.iso",
-            "iso_sha256sum": "b99f4b98a1b41737ded072dc1a7060ca32224e23236074790d4fc86b51009e3c",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/mint.png"
-        },
+    "mint" : {
+        "name": "Linux Mint",
+        "version": "18.1",
+        "iso": "http://mirrors.advancedhosters.com/linuxmint/isos/stable/18.1/linuxmint-18.1-cinnamon-64bit.iso",
+        "iso_sha256sum": "b99f4b98a1b41737ded072dc1a7060ca32224e23236074790d4fc86b51009e3c",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/mint.png"
+    },
 
-        "netbsd" : {
-            "name": "NetBSD",
-            "version": "7.1",
-            "iso": "http://cdn.netbsd.org/pub/NetBSD/NetBSD-7.1/images/NetBSD-7.1-amd64.iso",
-            "iso_sha512sum": "4d00951c2e5f51591a3b08a5d572a42e8a4f48b60901e58cfee5f0b7f107f3b923786860acda3caaf30b9ea3a7e39a2b4f3def951c4e30b08fb2232f20d5a0bc",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/netbsd.png"
-        },
+    "netbsd" : {
+        "name": "NetBSD",
+        "version": "7.1",
+        "iso": "http://cdn.netbsd.org/pub/NetBSD/NetBSD-7.1/images/NetBSD-7.1-amd64.iso",
+        "iso_sha512sum": "4d00951c2e5f51591a3b08a5d572a42e8a4f48b60901e58cfee5f0b7f107f3b923786860acda3caaf30b9ea3a7e39a2b4f3def951c4e30b08fb2232f20d5a0bc",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/netbsd.png"
+    },
 
-        "nixos" : {
-            "name": "NixOS",
-            "version": "17.03",
-            "iso": "https://d3g5gsiof5omrk.cloudfront.net/nixos/17.03/nixos-17.03.899.c87abfae79/nixos-graphical-17.03.899.c87abfae79-x86_64-linux.iso",
-            "iso_sha256sum": "50d1b0cd636cfeb92929b27953317ab39cc875bbbf40561eb5bd74a43fa0bb20",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/nixos.png"
-        },
+    "nixos" : {
+        "name": "NixOS",
+        "version": "17.03",
+        "iso": "https://d3g5gsiof5omrk.cloudfront.net/nixos/17.03/nixos-17.03.899.c87abfae79/nixos-graphical-17.03.899.c87abfae79-x86_64-linux.iso",
+        "iso_sha256sum": "50d1b0cd636cfeb92929b27953317ab39cc875bbbf40561eb5bd74a43fa0bb20",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/nixos.png"
+    },
 
-        "openbsd" : {
-            "name": "OpenBSD",
-            "version": "6.0",
-            "iso": "https://ftp4.usa.openbsd.org/pub/OpenBSD/6.0/amd64/install60.iso",
-            "iso_sha256sum": "a9b6b812cb456f11ba4362e232efdd5f0c47868f4281e383ecee77541b54498c",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/openbsd.png"
-        },
+    "openbsd" : {
+        "name": "OpenBSD",
+        "version": "6.0",
+        "iso": "https://ftp4.usa.openbsd.org/pub/OpenBSD/6.0/amd64/install60.iso",
+        "iso_sha256sum": "a9b6b812cb456f11ba4362e232efdd5f0c47868f4281e383ecee77541b54498c",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/openbsd.png"
+    },
 
-        "opensuse" : {
-            "name": "OpenSuse",
-            "version": "42.2",
-            "iso": "http://download.opensuse.org/distribution/leap/42.2/iso/openSUSE-Leap-42.2-DVD-x86_64.iso",
-            "iso_sha256sum": "ba5af6b0ac4d42d801de642304eb88ca9fd65a61b6c3ff25724182494f288f00",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/opensuse.png"
-        },
+    "opensuse" : {
+        "name": "OpenSuse",
+        "version": "42.2",
+        "iso": "http://download.opensuse.org/distribution/leap/42.2/iso/openSUSE-Leap-42.2-DVD-x86_64.iso",
+        "iso_sha256sum": "ba5af6b0ac4d42d801de642304eb88ca9fd65a61b6c3ff25724182494f288f00",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/opensuse.png"
+    },
 
-        "puppy" : {
-            "name": "Puppy Linux",
-            "version": "Slacko 6.3.2",
-            "iso": "http://distro.ibiblio.org/puppylinux/puppy-slacko-6.3.2/64/slacko64-6.3.2-uefi.iso",
-            "iso_md5sum": "50d953480af826e9b699af343c9df6d1",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/puppy.png"
-        },
+    "puppy" : {
+        "name": "Puppy Linux",
+        "version": "Slacko 6.3.2",
+        "iso": "http://distro.ibiblio.org/puppylinux/puppy-slacko-6.3.2/64/slacko64-6.3.2-uefi.iso",
+        "iso_md5sum": "50d953480af826e9b699af343c9df6d1",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/puppy.png"
+    },
 
-        "slackware" : {
-            "name": "Slackware",
-            "version": "14.2",
-            "iso": "http://mirrors.slackware.com/slackware/slackware-iso/slackware64-14.2-iso/slackware64-14.2-install-dvd.iso",
-            "iso_md5sum": "522db1d2845aaab22078530c67f858c1",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/slackware.png"
-        },
+    "slackware" : {
+        "name": "Slackware",
+        "version": "14.2",
+        "iso": "http://mirrors.slackware.com/slackware/slackware-iso/slackware64-14.2-iso/slackware64-14.2-install-dvd.iso",
+        "iso_md5sum": "522db1d2845aaab22078530c67f858c1",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/slackware.png"
+    },
 
-        "tails" : {
-            "name": "Tails",
-            "version": "2.11",
-            "iso": "https://mirrors.kernel.org/tails/stable/tails-i386-2.11/tails-i386-2.11.iso",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/tails.png"
-        },
+    "tails" : {
+        "name": "Tails",
+        "version": "2.11",
+        "iso": "https://mirrors.kernel.org/tails/stable/tails-i386-2.11/tails-i386-2.11.iso",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/tails.png"
+    },
 
-        "trisquel" : {
-            "name": "Trisquel GNU/Linux",
-            "version": "7.0",
-            "iso": "http://mirror.fsf.org/trisquel-images/trisquel_7.0_amd64.iso",
-            "iso_md5sum": "ef6b33d2959dbbb6016188868975091f",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/trisquel.png"
-        },
+    "trisquel" : {
+        "name": "Trisquel GNU/Linux",
+        "version": "7.0",
+        "iso": "http://mirror.fsf.org/trisquel-images/trisquel_7.0_amd64.iso",
+        "iso_md5sum": "ef6b33d2959dbbb6016188868975091f",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/trisquel.png"
+    },
 
-        "ubuntu" : {
-            "name": "Ubuntu",
-            "version":"16.04.2",
-            "iso": "http://releases.ubuntu.com/16.04.2/ubuntu-16.04.2-desktop-amd64.iso",
-            "iso_md5sum": "1400884cec8e40a1a876b2678f81494b",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/ubuntu.png"
-        },
+    "ubuntu" : {
+        "name": "Ubuntu",
+        "version":"16.04.2",
+        "iso": "http://releases.ubuntu.com/16.04.2/ubuntu-16.04.2-desktop-amd64.iso",
+        "iso_md5sum": "1400884cec8e40a1a876b2678f81494b",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/ubuntu.png"
+    },
 
-        "ubuntugnome" : {
-            "name": "Ubuntu Gnome",
-            "version": "16.04.2",
-            "iso": "http://cdimage.ubuntu.com/ubuntu-gnome/releases/16.04/release/ubuntu-gnome-16.04.2-desktop-amd64.iso",
-            "iso_md5sum": "359776d8375166a5f2ac4c376e451146",
-            "logo_url": "https://distrowatch.com/images/yvzhuwbpy/ubuntugnome.png"
-        }
+    "ubuntugnome" : {
+        "name": "Ubuntu Gnome",
+        "version": "16.04.2",
+        "iso": "http://cdimage.ubuntu.com/ubuntu-gnome/releases/16.04/release/ubuntu-gnome-16.04.2-desktop-amd64.iso",
+        "iso_md5sum": "359776d8375166a5f2ac4c376e451146",
+        "logo_url": "https://distrowatch.com/images/yvzhuwbpy/ubuntugnome.png"
     }
 }
