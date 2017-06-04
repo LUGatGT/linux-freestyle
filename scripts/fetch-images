@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# cat distros.json | jq 'map(.logo_url)' > tmp
+# hand modify the tmp file so that it's only the urls
+# wget -i tmp
