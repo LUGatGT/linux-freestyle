@@ -29,9 +29,9 @@ public class FXMLDocumentController implements Initializable {
         Map<String, Distro> distros = getDistros();
         for (Node x : hbox.getChildren()) {
             VBox vbox = (VBox) x;
-            for(Distro d : distros.values()) {
+            for(String d : distros.keySet()) {
                 ImageView iv = new ImageView();
-                iv.setImage(new Image(d.logo_url));
+                iv.setImage(new Image("images/" + d + ".png"));
                 vbox.getChildren().add(iv);
             }
         }
