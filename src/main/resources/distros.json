@@ -1,5 +1,5 @@
 {
-    "distros": [
+    "distros": {
         "apricity" : {
             "name": "Apricity OS",
             "version": "11.2016",
@@ -166,5 +166,5 @@
             "iso_md5sum": "359776d8375166a5f2ac4c376e451146",
             "logo_url": "https://distrowatch.com/images/yvzhuwbpy/ubuntugnome.png"
         }
-    ]
+    }
 }
