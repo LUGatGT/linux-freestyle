@@ -1,0 +1,8 @@
+[package]
+name = "freestyle-ui"
+version = "0.1.0"
+authors = ["Michael Eden <themichaeleden@gmail.com>"]
+
+[dependencies]
+gtk = "0.1"
+qmlrs = "0.1"
