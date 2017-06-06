@@ -154,7 +154,10 @@
         <!-- See http://checkstyle.sf.net/config_design.html -->
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
+
+        <!-- Disabled Checkstyle settings - May re-enable some in the future
         <module name="VisibilityModifier"/>
+        -->
 
         <!-- Miscellaneous other checks.                   -->
         <!-- See http://checkstyle.sf.net/config_misc.html -->

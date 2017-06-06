@@ -36,19 +36,15 @@ public class FXMLDocumentController implements Initializable {
             }
         }
     }
-    
-    public Map<String,Distro> getDistros()  {
-        try {
-            InputStream distroFileStream = getClass().getResourceAsStream("/distros.json");
-            BufferedReader br = new BufferedReader(new InputStreamReader(distroFileStream));
 
-            Type typeOfT = new TypeToken<Map<String,Distro>>(){}.getType();
-            Gson gson = new Gson();
+    public Map<String, Distro> getDistros()  {
+        InputStream distroFileStream = getClass().getResourceAsStream("/distros.json");
+        BufferedReader br = new BufferedReader(new InputStreamReader(distroFileStream));
 
-            return gson.fromJson(br, typeOfT);
-        } catch(Exception e) {
-            return null;
-        }
+        Type typeOfT = new TypeToken<Map<String, Distro>>() { } .getType();
+        Gson gson = new Gson();
+
+        return gson.fromJson(br, typeOfT);
 
     }
 }

@@ -14,12 +14,12 @@ public class Main extends Application {
     public final void start(Stage primaryStage) throws Exception {
 
         primaryStage.setTitle("Hello World");
-        
+
         URL url = getClass().getResource("/FXMLDocument.fxml");
         System.out.println("URL is " + url);
         Parent root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
-        
+
         primaryStage.setScene(scene);
 
         //primaryStage.setFullScreen(true);
