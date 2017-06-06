@@ -3,10 +3,10 @@ package freestyle;
 public class Distro {
     public String name;
     public String version;
-    public String iso;
-    public String iso_md5sum;
-    public String iso_sha256sum;
-    public String iso_sha512sum;
-    public String iso_sha1sum;
-    public String logo_url;
+    public String isoUrl;
+    public String isoMD5sum;
+    public String isoSHA256sum;
+    public String isoSHA512sum;
+    public String isoSHA1sum;
+    public String logoUrl;
 }

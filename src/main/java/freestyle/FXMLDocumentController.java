@@ -1,7 +1,6 @@
 package freestyle;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -29,7 +28,7 @@ public class FXMLDocumentController implements Initializable {
         Map<String, Distro> distros = getDistros();
         for (Node x : hbox.getChildren()) {
             VBox vbox = (VBox) x;
-            for(String d : distros.keySet()) {
+            for (String d : distros.keySet()) {
                 ImageView iv = new ImageView();
                 iv.setImage(new Image("images/" + d + ".png"));
                 vbox.getChildren().add(iv);
@@ -45,6 +44,5 @@ public class FXMLDocumentController implements Initializable {
         Gson gson = new Gson();
 
         return gson.fromJson(br, typeOfT);
-
     }
 }
