@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      .circle {
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        font-size: 50px;
+        color: #fff;
+        line-height: 500px;
+        text-align: center;
+        background: #000
+      }
+    </style>
+  </head>
+  <body>
+    <% for (let val of distros) { %>
+      <div class="circle" id="<%= val %>">
+        <p><%= val %></p>
+      </div>
+    <% } %>
+  </body>
+</html>
