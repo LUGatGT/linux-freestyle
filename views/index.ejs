@@ -5,22 +5,37 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <style>
       .circle {
-        width: 500px;
-        height: 500px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         font-size: 50px;
-        color: #fff;
-        line-height: 500px;
+        line-height: 200px;
         text-align: center;
-        background: #000
+        background: #000;
+        display: block;
       }
+      .a1 {
+        background: #c7eae4
+      }
+      .a2 {
+        background: #a7e8bd
+      }
+      .a3 {
+        background: #fcbcb8
+      }
+      .a4 {
+        background: #efa7a7
+      }
+      .a5 {
+        background: #ffd972
+      } 
     </style>
   </head>
   <body>
-    <% for (let val of distros) { %>
-      <div class="circle" id="<%= val %>">
+    <% count = 0; for (let val of distros) { %>
+      <div class="circle a<%= (count % 5) + 1 %>" id="<%= val %>">
         <p><%= val %></p>
       </div>
-    <% } %>
+    <% count++; } %>
   </body>
 </html>
