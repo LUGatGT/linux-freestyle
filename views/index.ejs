@@ -3,16 +3,19 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
       .circle {
         width: 200px;
         height: 200px;
         border-radius: 50%;
-        font-size: 50px;
+        font-size: 35px;
         line-height: 200px;
         text-align: center;
         background: #000;
-        display: block;
+        margin-right: 3%;
+        margin-bottom: 3%;
+        display: inline-block;
       }
       .a1 {
         background: #c7eae4
@@ -30,6 +33,14 @@
         background: #ffd972
       } 
     </style>
+    <script>
+      $(document).ready(function() {
+        $(".circle").click(function() {
+          var id = $(this).attr("id");
+          console.log(id);
+        });
+      });
+    </script>
   </head>
   <body>
     <% count = 0; for (let val of distros) { %>
