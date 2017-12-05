@@ -5,6 +5,11 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
+      .par {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
       .circle {
         width: 200px;
         height: 200px;
@@ -16,6 +21,9 @@
         margin-right: 3%;
         margin-bottom: 3%;
         display: inline-block;
+        border-color: #ffffff;
+        border-width: 5px;
+        border-style: solid;
       }
       .a1 {
         background: #c7eae4
@@ -32,21 +40,30 @@
       .a5 {
         background: #ffd972
       } 
+      .bord {
+        border-style: solid;
+        border-width: 5px;
+        border-color: #a0afab;
+      }
     </style>
     <script>
       $(document).ready(function() {
         $(".circle").click(function() {
           var id = $(this).attr("id");
           console.log(id);
+          $(".bord").removeClass("bord");
+          $(this).addClass("bord");
         });
       });
     </script>
   </head>
   <body>
+  <div class="par">
     <% count = 0; for (let val of distros) { %>
       <div class="circle a<%= (count % 5) + 1 %>" id="<%= val %>">
         <p><%= val %></p>
       </div>
     <% count++; } %>
+  </div>
   </body>
 </html>
