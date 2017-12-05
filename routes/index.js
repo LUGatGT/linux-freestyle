@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
 router.post('/install', function(req, res, next) {
   var dist = req.body.distro;
   if (usbIn != "") {
-    exec("dd", ['if=' + dist + '.iso', 'of=' + '/dev/' + usbIn],{ detached: true, stdio:['ignore',out,err]});
+    exec("dd", ['if=dist/' + dist + '.iso', 'of=' + '/dev/' + usbIn],{ detached: true, stdio:['ignore',out,err]});
     res.json({ 'error': false });
   } else {
     res.json({'error':true});
