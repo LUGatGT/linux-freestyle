@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 out.log
 
+dist/*
+
 # Runtime data
 pids
 *.pid
