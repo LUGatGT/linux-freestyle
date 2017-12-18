@@ -35,13 +35,16 @@ var devDescriptor = inotify.addWatch(devDir);
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express', distros:['ubuntu', 'fedora', 'arch', 'slackware', 'gentoo', 'debian', 'opensuse', 'dragonos', 'mint', 'centos'] });
 });
+
 router.post('/install', function(req, res, next) {
   var dist = req.body.distro;
   if (usbIn != "") {
-    exec("dd", ['if=dist/' + dist + '.iso', 'of=' + '/dev/' + usbIn],{ detached: true, stdio:['ignore',out,err]});
+    var usbNum = usbIn.charCodeAt(2) - 97;
+    exec("python", ['ddhelper.py', 'dist/' + dist + '.iso', '/dev/' + usbIn, usbNum], { detached: true, stdio: ['ignore', out, err] });
     res.json({ 'error': false });
   } else {
     res.json({'error':true});
   }
 });
+
 module.exports = router;
