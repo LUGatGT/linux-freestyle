@@ -40,12 +40,14 @@ var dd;
 var ddStatus = {
 	bytes_written: 0,
 	speed: 0,
-	speed_units: 'MB/s'
+	speed_units: 'MB/s',
+	state: "init"
 };
 
 function ddParseStatus(data) {
   try {
-      const lines = data.split('\n');
+      // we use a try because it's possible the entire message isn't buffered
+      const lines = data.split('\n').filter(line => line.length != 0); //filter out empty lines
       const fields = lines[2].split(' ');
       const bytes = fields[0];
 
@@ -56,6 +58,7 @@ function ddParseStatus(data) {
 	      bytes_written: bytes,
 	      speed: speed,
 	      speed_units: speed_units,
+	      state: "running",
       };
   } catch (error) {
     console.log('Error while parsing output from dd.');
@@ -81,6 +84,9 @@ router.post('/install', function(req, res, next) {
 
     dd.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
+      if (code == 0) {
+        ddStatus.state = "complete";
+      }
     });
 
     setInterval( () => {

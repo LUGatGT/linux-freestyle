@@ -15,18 +15,6 @@ http.listen(4000, function(){
   console.log('listening on *:4000');
 });
 
-var io = require('socket.io')(http);
-
-io.on('connection', function(socket) {
-  console.log('connected');
-  io.emit('hi');
-  socket.on('data', function(msg){
-    console.log("hit " + msg);
-    io.emit('finished', msg);
-  });
-});
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
