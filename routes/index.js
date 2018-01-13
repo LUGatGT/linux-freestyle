@@ -37,12 +37,25 @@ router.get('/', function(req, res, next) {
 });
 
 var dd;
-var ddStatus = {
+var distBytes = 0;
+
+var ddStatusClean = {
 	bytes_written: 0,
+        bytes_total: distBytes,
+        percentage: 0,
 	speed: 0,
 	speed_units: 'MB/s',
-	state: "init"
+	state: "init",
+        status: "",
 };
+var ddStatus = ddStatusClean;
+
+// TODO rewrite to use callback (non-sync version)
+function getFilesizeInBytes(filename) {
+    const stats = fs.statSync(filename)
+    const fileSizeInBytes = stats.size
+    return fileSizeInBytes
+}
 
 function ddParseStatus(data) {
   try {
@@ -56,9 +69,12 @@ function ddParseStatus(data) {
 
       ddStatus = {
 	      bytes_written: bytes,
+              bytes_total: distBytes,
+              percentage: Math.trunc((bytes / distBytes)*100),
 	      speed: speed,
 	      speed_units: speed_units,
 	      state: "running",
+              status: "",
       };
   } catch (error) {
     console.log('Error while parsing output from dd.');
@@ -71,7 +87,9 @@ router.post('/install', function(req, res, next) {
     var usbNum = usbIn.charCodeAt(2) - 97;
 
     //TODO validate dist parameter to prevent shell injection
-    dd = spawn("dd", ['if=dist/' + dist + '.iso', 'of=/dev/' + usbIn, 'bs=8M', 'conv=fdatasync']);
+    var distFile = 'dist/' + dist + '.iso';
+    distBytes = getFilesizeInBytes(distFile);
+    dd = spawn("dd", ['if=' + distFile, 'of=/dev/' + usbIn, 'bs=8M', 'conv=fdatasync']);
 
     dd.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
@@ -86,7 +104,13 @@ router.post('/install', function(req, res, next) {
     dd.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
       if (code == 0) {
-        ddStatus.state = "complete";
+        ddStatus.state = "done";
+        ddStatus.status = "success";
+      }
+
+      if (code != 0) {
+        ddStatus.state = "done";
+        ddStatus.status = "failure";
       }
     });
 
