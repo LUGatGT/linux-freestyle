@@ -71,7 +71,7 @@
   <div class="par">
     <% count = 0; for (let val of distros) { %>
       <div class="circle a<%= (count % 5) + 1 %>" id="<%= val %>">
-        <p><%= val %></p>
+        <img class="distro-logo" alt="<%= val %>" src="/res/<%= val %>/logo.png">
       </div>
     <% count++; } %>
   </div>
