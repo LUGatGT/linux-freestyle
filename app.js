@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 var http = require('http').Server(app);
@@ -14,18 +13,6 @@ var http = require('http').Server(app);
 http.listen(4000, function(){
   console.log('listening on *:4000');
 });
-
-var io = require('socket.io')(http);
-
-io.on('connection', function(socket) {
-  console.log('connected');
-  io.emit('hi');
-  socket.on('data', function(msg){
-    console.log("hit " + msg);
-    io.emit('finished', msg);
-  });
-});
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
