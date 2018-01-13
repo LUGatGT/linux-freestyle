@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=Linux Freestyle
-Comment=A machine for trying out different Linux distros
-Exec=java -jar /opt/freestyle/linux-freestyle-1.0.jar
-Icon=/opt/freestyle/tux.png
-Terminal=false
-Type=Application
