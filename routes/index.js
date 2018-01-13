@@ -70,7 +70,8 @@ router.post('/install', function(req, res, next) {
   if (usbIn != "") {
     var usbNum = usbIn.charCodeAt(2) - 97;
 
-    dd = spawn("dd", ['if=dist/' + dist + '.iso', 'of=/dev/' + usbIn, 'bs=8M']);
+    //TODO validate dist parameter to prevent shell injection
+    dd = spawn("dd", ['if=dist/' + dist + '.iso', 'of=/dev/' + usbIn, 'bs=8M', 'conv=fdatasync']);
 
     dd.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
@@ -90,10 +91,10 @@ router.post('/install', function(req, res, next) {
     });
 
     setInterval( () => {
-      console.log("Sending signal...");
-      // We keep sending the signal even if it's finished
-      // that's ok, but it would be better if we didn't
-      dd.kill("SIGUSR1");
+      if (ddStatus.state != "done") {
+        console.log("Sending signal...");
+        dd.kill("SIGUSR1");
+      }
     }, 10000);
 
     res.json({ 'error': false });
