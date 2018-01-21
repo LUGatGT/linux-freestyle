@@ -88,6 +88,7 @@ router.post('/install', function(req, res, next) {
     var usbNum = usbIn.charCodeAt(2) - 97;
 
     const distFile = 'isos/' + distros[distroId].url.split('/').pop();
+    console.log(`distfile is ${distFile}`);
     distBytes = getFilesizeInBytes(distFile);
     dd = spawn("dd", ['if=' + distFile, 'of=/dev/' + usbIn, 'bs=8M', 'conv=fdatasync']);
 
@@ -119,7 +120,7 @@ router.post('/install', function(req, res, next) {
         console.log("Sending signal...");
         dd.kill("SIGUSR1");
       }
-    }, 10000);
+    }, 3000);
 
     res.json({ 'error': false });
   } else {

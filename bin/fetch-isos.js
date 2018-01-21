@@ -42,7 +42,7 @@ function checkFileHash(distro, matchCB, mismatchCB, errorCB) {
         const hash = hasher.digest('hex');
         if (distro.hash === hash) {
             console.log(`${distro.name} hash ${hash} matches index.`)
-            matchCB();
+            matchCB(distro);
         } else {
             console.log(`${distro.name} hash ${hash} does not match hash from index ${distro.hash}.`)
             mismatchCB(distro, hash);
@@ -63,12 +63,12 @@ function fetchISO(distro, successCB, errorCB) {
     stream.on('open', () => {
         console.log(`Downloading ${distro.name} from <${distro.url}>.`);
         progress(request.get(options).on('error', errorCB)).on('progress', state => {
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
             const percent = (state.percent * 100).toFixed(2);
             const total = Math.round(state.time.remaining);
             const seconds = total % 60;
             const minutes = Math.trunc(total / 60);
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
             process.stdout.write(`Downloaded ${percent}% Time remaining: ${minutes} minutes ${seconds} seconds.`)
         }).pipe(stream).on('finish', () => {
             console.log('');//reset newline
@@ -85,9 +85,7 @@ function fetchISOCheckHash(distro, successCB, errorCB) {
         },distro => {
             //invalid hash so delete file so it won't accidentally be flashed
             deleteLocalISO(distro, errorCB);
-        }, error => {
-            errorCB(error);
-        });
+        }, errorCB);
     }, error => {
         // network error. Delete partially downloaded file if necessary
         deleteLocalISO(distro, errorCB);
@@ -103,7 +101,7 @@ async.forEachOfSeries(distros, (distro, distroId, callback) => {
         callback();
     }, distro => {
         //mismatched hash attempt to download
-        fetchISOCheckHash(distro, error => {
+        fetchISOCheckHash(distro, callback, error => {
             console.log(error);
             callback();
         });
@@ -119,5 +117,7 @@ async.forEachOfSeries(distros, (distro, distroId, callback) => {
         }
     });
 }, error => {
-    console.log(error);
+    if (error) {
+        console.log(error);
+    }
 });
