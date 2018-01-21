@@ -1,0 +1,33 @@
+{
+    "arch" : {
+        "name": "Arch Linux",
+        "version": "2018.01.01",
+        "url": "http://www.gtlib.gatech.edu/pub/archlinux/iso/2018.01.01/archlinux-2018.01.01-x86_64.iso",
+        "hash_type": "md5",
+        "hash": "1a9e79614527534105a40b2beb09f30f"
+    },
+
+    "centos" : {
+        "name": "CentOs",
+        "version": "7",
+        "url": "http://www.gtlib.gatech.edu/pub/centos/7/isos/x86_64/CentOS-7-x86_64-Everything-1708.iso",
+        "hash_type": "sha256",
+        "hash": "8593f5a1631ebfb7581193a7b4ef96d44f500d3ceb49cc4cfbfd71d5698e4173"
+    },
+
+    "debian" : {
+        "name": "Debian (Gnome)",
+        "version": "9.3.0",
+        "url": "http://www.gtlib.gatech.edu/pub/debian-cd/9.3.0-live/amd64/iso-hybrid/debian-live-9.3.0-amd64-gnome.iso",
+        "hash_type": "sha256",
+        "hash": "3957e90a8df56755e8a571fe4c43253318707af427839cb1acf23b1ad958ea7f"
+    },
+
+    "ubuntu" : {
+        "name": "Ubuntu",
+        "version":"16.04.3",
+        "url": "http://www.gtlib.gatech.edu/pub/ubuntu-releases/16.04.3/ubuntu-16.04.3-desktop-amd64.iso",
+        "hash_type": "md5",
+        "hash": "0d9fe8e1ea408a5895cbbe3431989295"
+    }
+} 
