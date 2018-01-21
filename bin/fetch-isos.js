@@ -69,7 +69,7 @@ function fetchISO(distro, successCB, errorCB) {
             const total = Math.round(state.time.remaining);
             const seconds = total % 60;
             const minutes = Math.trunc(total / 60);
-            process.stdout.write(`Downloaded ${percentage}% Time remaining: ${minutes} minutes ${seconds} seconds.`)
+            process.stdout.write(`Downloaded ${percent}% Time remaining: ${minutes} minutes ${seconds} seconds.`)
         }).pipe(stream).on('finish', () => {
             console.log('');//reset newline
             successCB(distro);

@@ -1,0 +1,12 @@
+# We want to match on all usb flash drives.
+# We explicitly don't match on /dev/sda to prevent changing the
+# system's filesystem permissions, though this makes some assumptions
+# about naming conventions that might not be true. Care must be taken
+# before installing this file to: /dev/udev/rules.d/99-thumbdrives.rules
+# 
+# If the computer this application is installed on has multiple disks then
+# the following rule should be modified to exclude all of them.
+#
+# The OWNER and GROUP parameters should be changed to the user that is running
+# the application.
+KERNEL=="sd[b-f]", SUBSYSTEM=="block", SUBSYSTEMS=="usb", ENV{DEVTYPE}=="disk", OWNER="CHANGEME", GROUP="CHANGEME", MODE="0660"
