@@ -23,6 +23,14 @@
         "hash": "3957e90a8df56755e8a571fe4c43253318707af427839cb1acf23b1ad958ea7f"
     },
 
+    "opensuse" : {
+        "name": "openSUSE",
+        "version": "42.3",
+        "url": "http://www.gtlib.gatech.edu/pub/opensuse/distribution/openSUSE-stable/iso/openSUSE-Leap-42.3-DVD-x86_64.iso",
+        "hash_type": "sha256",
+        "hash": "195baca6c5f3b7f3ad4d7984a7f7bd5c4a37be2eb67e58b65d07ac3a2b599e83"
+    },
+
     "ubuntu" : {
         "name": "Ubuntu",
         "version":"16.04.3",

@@ -8,9 +8,9 @@
   </head>
   <body>
   <div class="par">
-    <% count = 0; for (let val of distros) { %>
-      <div class="circle a<%= (count % 5) + 1 %>" id="<%= val %>">
-        <img class="distro-logo" alt="<%= val %>" src="/res/<%= val %>/logo.png">
+    <% count = 0; for (let distroId in distros) { %>
+      <div class="circle a<%= (count % 5) + 1 %>" id="<%= distroId %>">
+        <img class="distro-logo" alt="<%= distros[distroId].name %>" src="/res/<%= distroId %>/logo.png">
       </div>
     <% count++; } %>
   </div>

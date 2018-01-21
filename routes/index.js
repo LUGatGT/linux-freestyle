@@ -5,6 +5,7 @@ var inotify = new Inotify();
 const { spawn } = require('child_process');
 var fs = require('fs');
 
+const distros = JSON.parse(fs.readFileSync('distros.json'));
 const out = fs.openSync('./out.log', 'a');
 const err = fs.openSync('./out.log', 'a');
 var usbIn = "";
@@ -33,7 +34,7 @@ var devDescriptor = inotify.addWatch(devDir);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', distros:['ubuntu', 'fedora', 'arch', 'slackware', 'gentoo', 'debian', 'opensuse', 'dragonos', 'mint', 'centos'] });
+  res.render('index', { title: 'Express', distros: distros});
 });
 
 var dd;
@@ -82,12 +83,11 @@ function ddParseStatus(data) {
 }
 
 router.post('/install', function(req, res, next) {
-  var dist = req.body.distro;
+  var distroId = req.body.distro;
   if (usbIn != "") {
     var usbNum = usbIn.charCodeAt(2) - 97;
 
-    //TODO validate dist parameter to prevent shell injection
-    var distFile = 'dist/' + dist + '.iso';
+    const distFile = 'isos/' + distros[distroId].url.split('/').pop();
     distBytes = getFilesizeInBytes(distFile);
     dd = spawn("dd", ['if=' + distFile, 'of=/dev/' + usbIn, 'bs=8M', 'conv=fdatasync']);
 
