@@ -15,8 +15,9 @@
     <% count++; } %>
   </div>
 
+  <% for(let i = 0; i < MAX_USB; i++) { %>
   <!-- -->
-  <div id="bar1" class="progress-wrapper">
+  <div id="bar<% i %>" class="progress-wrapper">
     <div class="progress-bar">
       <div class="progress-completed"></div>
       <span class="progress-center-text">0% complete</span>
@@ -27,6 +28,7 @@
     </p>
   </div>
   <!-- -->
+  <% } %>
 
   </body>
 </html>

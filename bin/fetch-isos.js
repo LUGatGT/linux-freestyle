@@ -96,6 +96,13 @@ function fetchISOCheckHash(distro, successCB, errorCB) {
 async.forEachOfSeries(distros, (distro, distroId, callback) => {
     const localFileName = destdir + url.parse(distro.url).pathname.split('/').pop();
 
+    fs.stat(localFileName, (error, data) => {
+        if (error) { //file likely doesn't exist so skip error for now
+        } else if (data.size !== distro.size) {
+            console.log(`Warning: ${distro.name} has listed size of ${distro.size} bytes while ${localFileName} has ${data.size} bytes.`);
+        }
+    });
+
     checkFileHash(distro, distro => {
         //matched hash
         callback();

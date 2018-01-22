@@ -1,6 +1,6 @@
 $(document).ready(function() {
   setInterval( () => {
-      updateProgressBar(1);
+      updateProgressBars();
   }, 1000);
   $(".circle").click(function() {
     var id = $(this).attr("id");
@@ -14,25 +14,20 @@ $(document).ready(function() {
   });
 });
 
-var alerted = false;
-function updateProgressBar(bar_number) {
+function updateProgressBars() {
     $.get('/status').done(function(data) {
-        var totalBytes = 1587609600; // TODO we should store these values somewhere or calculate them at startup
-        const ddStatus = data;
-        console.log(ddStatus);
+        for (let i = 0; i < data.length; i++) {
+            const ddStatus = data[i];
+            console.log(ddStatus);
 
-        if (ddStatus.state === "init") {
-            alerted = false;
+            if (ddStatus.state === "done") {
+                alert(`Done writing flashdrive #${i}.`);
+            }
+
+            $(`#bar${i} .progress-completed`).width(ddStatus.percentage + "%");
+            $(`#bar${i} .progress-center-text`).text(ddStatus.percentage + "% complete");
+            $(`#bar${i} .progress-left-text`).text(ddStatus.bytes_written + " bytes written");
+            $(`#bar${i} .progress-right-text`).text(ddStatus.speed + " " + ddStatus.speed_units);
         }
-
-        if (ddStatus.state === "done" && !alerted) {
-            alert("Done writing flashdrive.");
-            alerted = true;
-        }
-
-        $(`#bar${bar_number} .progress-completed`).width(ddStatus.percentage + "%");
-        $(`#bar${bar_number} .progress-center-text`).text(ddStatus.percentage + "% complete");
-        $(`#bar${bar_number} .progress-left-text`).text(ddStatus.bytes_written + " bytes written");
-        $(`#bar${bar_number} .progress-right-text`).text(ddStatus.speed + " " + ddStatus.speed_units);
     });
 }
