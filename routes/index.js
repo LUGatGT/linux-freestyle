@@ -35,6 +35,9 @@ var devDir = {
     } else {
       console.log(nm + " removed");
       usbsIn = remove(usbsIn, nm);
+      const usbNum = usbIn.charCodeAt(2) - 'b'.charCodeAt(0);
+      resetProcess(usbNum);
+      
       if (usbIn == nm) {
         usbIn = "";
       }
@@ -55,16 +58,29 @@ var ddStatusModel = {
         percentage: 0,
 	speed: 0,
 	speed_units: 'MB/s',
-	state: "init",
-        status: "",
+	state: "init", //allowed values: "init", "running", "done"
+        status: "",    //allowed values when state is done: "success", "failure"
+        distroId: "",
 };
 
 //TODO combine these into a single object
 var childrenProcesses = Array(MAX_USB).fill({});
 var ddStatus = Array(MAX_USB).fill(ddStatusModel);
 var intervals = Array(MAX_USB).fill(0);
-
 var errorBuf = Array(MAX_USB).fill([]);
+
+setInterval( () => {
+    for (let i = 0; i < MAX_USB; i++) {
+        if (ddStatus[i].state === "init" || ddStatus[i].state === "running") {
+            const dd = childrenProcesses[i];
+            if (dd.kill) {
+                console.log("->");
+                dd.kill("SIGUSR1");
+            }
+        }
+  }
+}, 5000);
+
 
 function ddParseStatus(lines, usbNum) {
   try {
@@ -74,47 +90,54 @@ function ddParseStatus(lines, usbNum) {
 
       const speed = fields[fields.length - 2];
       const speed_units = fields[fields.length - 1];
+      const distBytes = distros[ddStatus[usbNum].distroId].size;
 
       ddStatus[usbNum] = {
 	      bytes_written: bytes,
-              bytes_total: distBytes,
+              bytes_total: ddStatus[usbNum],
               percentage: Math.trunc((bytes / distBytes)*100),
 	      speed: speed,
 	      speed_units: speed_units,
 	      state: "running",
               status: "",
+              distroId: ddStatus[usbNum].distroId,
       };
   } catch (error) {
     console.log('Error while parsing output from dd.');
+    console.log(error);
   }
 }
 
 router.post('/install', function(req, res, next) {
-  var distroId = req.body.distro;
+  //todo validate distroId in distros
+  const distroId = req.body.distro;
   if (usbIn != "") {
-    var usbNum = usbIn.charCodeAt(2) - 'b'.charCodeAt(0);
+    const usbNum = usbIn.charCodeAt(2) - 'b'.charCodeAt(0);
 
     const distFile = 'isos/' + distros[distroId].url.split('/').pop();
     console.log(`distfile is ${distFile}`);
-    distBytes = distros[distroId].size;
     const dd = spawn("dd", ['if=' + distFile, 'of=/dev/' + usbIn, 'bs=8M', 'conv=fdatasync']);
     console.log(dd.spawnargs);
     childrenProcesses[usbNum] = dd;
+
+    ddStatus[usbNum].distroId = distroId;
 
     dd.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
     });
 
     dd.stderr.on('data', (data) => {
+      console.log(data.toString());
       // buffer output from dd as sometimes we get a partial record
       errorBuf[usbNum] = errorBuf[usbNum].concat(data.toString().split('\n').filter(line => line.length));
       if (errorBuf[usbNum].length >= 3) {
           /* Information on copy speed, etc is send to stderr on SIGUSR1 */
           ddParseStatus(errorBuf[usbNum].splice(0, 3), usbNum);
+          console.log("<-");
       }
     });
 
-    dd.on('close', (code) => {
+    dd.on('exit', (code, signal) => {
       console.log(`child process exited with code ${code}`);
       if (code == 0) {
         ddStatus[usbNum].state = "done";
@@ -127,15 +150,6 @@ router.post('/install', function(req, res, next) {
       }
     });
 
-    intervals[usbNum] = setInterval( () => {
-      if (ddStatus[usbNum].state != "done" && ddStatus[usbNum].state != "error") {
-        console.log(".");
-        dd.kill("SIGUSR1");
-      } else {
-        clearInterval(intervals[usbNum]);
-      }
-    }, 5000);
-
     res.json({ 'error': false });
   } else {
     res.json({'error':true});
@@ -144,6 +158,23 @@ router.post('/install', function(req, res, next) {
 
 router.get('/status', function(req, res, next) {
     return res.json(ddStatus);
+});
+
+function resetProcess(index) {
+    if (ddStatus[index] === "running") {
+        childrenProcesses[index].kill('SIGTERM');
+    }
+    ddStatus[index] = ddStatusModel;
+}
+
+// this transitions from state done to init
+router.post('/reset/:id', function(req, res, next) {
+    const index = parseInt(req.params.id);
+    if (index === NaN) {
+        return res.json({status: "failure"});
+    }
+    resetProcess(index);
+    return res.json({status: "success"});
 });
 
 module.exports = router;
